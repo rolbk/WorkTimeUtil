@@ -18,6 +18,10 @@
 		88F78A2029CF19DB0018CE04 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F78A1F29CF19DB0018CE04 /* DateUtil.swift */; };
 		88F78A2429CF2C1C0018CE04 /* CalenderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F78A2329CF2C1C0018CE04 /* CalenderManager.swift */; };
 		88FF199D29CF5D4A00BDD1A2 /* DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF199029CF5D4900BDD1A2 /* DTOs.swift */; };
+		88TEST0129D30000007070D5 /* DateUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88TEST0029D30000007070D5 /* DateUtilTests.swift */; };
+		88TEST0329D30000007070D5 /* WorkEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88TEST0229D30000007070D5 /* WorkEventTests.swift */; };
+		88TEST0529D30000007070D5 /* ParseDateParameterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88TEST0429D30000007070D5 /* ParseDateParameterTests.swift */; };
+		88TEST0729D30000007070D5 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88TEST0629D30000007070D5 /* ConfigTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,10 +50,22 @@
 		88F78A1F29CF19DB0018CE04 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		88F78A2329CF2C1C0018CE04 /* CalenderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderManager.swift; sourceTree = "<group>"; };
 		88FF199029CF5D4900BDD1A2 /* DTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOs.swift; sourceTree = "<group>"; };
+		88TEST0029D30000007070D5 /* DateUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilTests.swift; sourceTree = "<group>"; };
+		88TEST0229D30000007070D5 /* WorkEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEventTests.swift; sourceTree = "<group>"; };
+		88TEST0429D30000007070D5 /* ParseDateParameterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDateParameterTests.swift; sourceTree = "<group>"; };
+		88TEST0629D30000007070D5 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		88TEST0829D30000007070D5 /* WorkTimeUtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkTimeUtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		88F789F229CEF9850018CE04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88TEST0929D30000007070D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -74,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				88F789F729CEF9850018CE04 /* WorkTimeUtil */,
+				88TEST1029D30000007070D5 /* WorkTimeUtilTests */,
 				88F789F629CEF9850018CE04 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,8 +99,20 @@
 			isa = PBXGroup;
 			children = (
 				88F789F529CEF9850018CE04 /* WorkTimeUtil */,
+				88TEST0829D30000007070D5 /* WorkTimeUtilTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		88TEST1029D30000007070D5 /* WorkTimeUtilTests */ = {
+			isa = PBXGroup;
+			children = (
+				88TEST0029D30000007070D5 /* DateUtilTests.swift */,
+				88TEST0229D30000007070D5 /* WorkEventTests.swift */,
+				88TEST0429D30000007070D5 /* ParseDateParameterTests.swift */,
+				88TEST0629D30000007070D5 /* ConfigTests.swift */,
+			);
+			path = WorkTimeUtilTests;
 			sourceTree = "<group>";
 		};
 		88F789F729CEF9850018CE04 /* WorkTimeUtil */ = {
@@ -132,6 +161,23 @@
 			productReference = 88F789F529CEF9850018CE04 /* WorkTimeUtil */;
 			productType = "com.apple.product-type.tool";
 		};
+		88TEST1129D30000007070D5 /* WorkTimeUtilTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88TEST1529D30000007070D5 /* Build configuration list for PBXNativeTarget "WorkTimeUtilTests" */;
+			buildPhases = (
+				88TEST1229D30000007070D5 /* Sources */,
+				88TEST0929D30000007070D5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88TEST1429D30000007070D5 /* PBXTargetDependency */,
+			);
+			name = WorkTimeUtilTests;
+			productName = WorkTimeUtilTests;
+			productReference = 88TEST0829D30000007070D5 /* WorkTimeUtilTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -163,9 +209,28 @@
 			projectRoot = "";
 			targets = (
 				88F789F429CEF9850018CE04 /* WorkTimeUtil */,
+				88TEST1129D30000007070D5 /* WorkTimeUtilTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXContainerItemProxy section */
+		88TEST1329D30000007070D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88F789ED29CEF9850018CE04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88F789F429CEF9850018CE04;
+			remoteInfo = WorkTimeUtil;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXTargetDependency section */
+		88TEST1429D30000007070D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88F789F429CEF9850018CE04 /* WorkTimeUtil */;
+			targetProxy = 88TEST1329D30000007070D5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
 		88F789F129CEF9850018CE04 /* Sources */ = {
@@ -183,6 +248,17 @@
 				8898F82229D22EAC0065F2BF /* Config.swift in Sources */,
 				884D7BD629CF6598007070D5 /* AbsenceAPI.swift in Sources */,
 				88F78A1C29CF19270018CE04 /* WorkEvent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88TEST1229D30000007070D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88TEST0129D30000007070D5 /* DateUtilTests.swift in Sources */,
+				88TEST0329D30000007070D5 /* WorkEventTests.swift in Sources */,
+				88TEST0529D30000007070D5 /* ParseDateParameterTests.swift in Sources */,
+				88TEST0729D30000007070D5 /* ConfigTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +404,30 @@
 			};
 			name = Release;
 		};
+		88TEST1629D30000007070D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emanuelmairoll.WorkTimeUtilTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkTimeUtil";
+			};
+			name = Debug;
+		};
+		88TEST1729D30000007070D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emanuelmairoll.WorkTimeUtilTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkTimeUtil";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -345,6 +445,15 @@
 			buildConfigurations = (
 				88F789FD29CEF9850018CE04 /* Debug */,
 				88F789FE29CEF9850018CE04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88TEST1529D30000007070D5 /* Build configuration list for PBXNativeTarget "WorkTimeUtilTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88TEST1629D30000007070D5 /* Debug */,
+				88TEST1729D30000007070D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
