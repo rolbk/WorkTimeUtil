@@ -70,9 +70,15 @@ func getAbsenceIOCreds() -> String? {
 }
 
 func getWorkHoursPerWeek() -> Double? {
+    guard defaults.object(forKey: "workHoursPerWeek") != nil else {
+        return nil
+    }
     return defaults.double(forKey: "workHoursPerWeek")
 }
 
 func getRemoveLunchBreak() -> Bool? {
+    guard defaults.object(forKey: "removeLunchBreak") != nil else {
+        return nil
+    }
     return defaults.bool(forKey: "removeLunchBreak")
 }

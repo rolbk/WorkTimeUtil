@@ -22,7 +22,7 @@ func pushToAbsence(_ parameters: [String], calendar: CalendarManager, absenceAPI
 
             // Fetch the work events using the CalendarManager instance
             let unstretchedWorkEvents = calendar.fetchEvents(startDate: startDate, endDate: endDate)
-            let nonUnionWorkEvents = unstretchedWorkEvents.map { $0.isWork || true ? WorkEvent(startDate: $0.startDate.cropTime(), endDate: $0.endDate.cropTime().plusOneDay(), type: $0.type, commentary: $0.commentary) : $0 }
+            let nonUnionWorkEvents = unstretchedWorkEvents.map { WorkEvent(startDate: $0.startDate.cropTime(), endDate: $0.endDate.cropTime().plusOneDay(), type: $0.type, commentary: $0.commentary) }
             var workEvents: [WorkEvent] = []
 
             for event in nonUnionWorkEvents {

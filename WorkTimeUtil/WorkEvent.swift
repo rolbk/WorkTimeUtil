@@ -17,6 +17,6 @@ extension WorkEvent {
     }
 
     var reducesTarget: Bool {
-        type == .companyEvent || type == .vacation || type == .holiday || type == .sick
+        type == .companyEvent || type == .vacation || type == .holiday || type == .sick || type == .compensatory
     }
 }
