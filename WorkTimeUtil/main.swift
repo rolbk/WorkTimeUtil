@@ -17,6 +17,8 @@ private func parseCommand(_ args: [String]) -> WorkTimeUtilCommand? {
         return .calculate(parameters: parameters, verbose: verbose)
     } else if binaryName == "wtp" {
         return .push(parameters: Array(args.dropFirst()))
+    } else if binaryName == "wte" {
+        return .export(parameters: Array(args.dropFirst()))
     }
 
     if args.count < 2 {
