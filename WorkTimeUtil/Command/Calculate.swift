@@ -90,7 +90,7 @@ private func printVerboseTable(workEvents: [WorkEvent], startDate: Date, endDate
 
     print("├────────────┴─────┴───────┴───────┴────────────────┼─────────┤")
     print("│ Total Work Hours                                  │ \(String(format: "%6.2f", totalHours))h │")
-    print("└────────────────────────────────────────────────────┴─────────┘")
+    print("└───────────────────────────────────────────────────┴─────────┘")
     print("")
 }
 
