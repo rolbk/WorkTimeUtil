@@ -17,7 +17,7 @@ func calculateWorkHours(_ parameters: [String], calendar: CalendarManager, verbo
         print("For '\(parameter)':")
 
         if verbose {
-            printVerboseTable(workEvents: workEvents, removeLunchBreak: removeLunchBreak)
+            printVerboseTable(workEvents: workEvents, startDate: startDate, endDate: endDate, removeLunchBreak: removeLunchBreak)
         }
 
         print("Should Work: \(shouldWork.rounded(toDecimalPlaces: 2)) hours")
@@ -26,7 +26,7 @@ func calculateWorkHours(_ parameters: [String], calendar: CalendarManager, verbo
     }
 }
 
-private func printVerboseTable(workEvents: [WorkEvent], removeLunchBreak: Bool) {
+private func printVerboseTable(workEvents: [WorkEvent], startDate: Date, endDate: Date, removeLunchBreak: Bool) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     dateFormatter.timeZone = .gmt
@@ -35,38 +35,62 @@ private func printVerboseTable(workEvents: [WorkEvent], removeLunchBreak: Bool) 
     timeFormatter.dateFormat = "HH:mm"
     timeFormatter.timeZone = .gmt
 
-    let sortedEvents = workEvents.sorted { $0.startDate < $1.startDate }
+    let weekdayFormatter = DateFormatter()
+    weekdayFormatter.dateFormat = "EEE"
+    weekdayFormatter.timeZone = .gmt
 
-    // Print table header
-    print("┌────────────┬───────┬───────┬────────────────┬─────────┐")
-    print("│ Date       │ Start │ End   │ Type           │ Hours   │")
-    print("├────────────┼───────┼───────┼────────────────┼─────────┤")
-
-    var totalHours: Double = 0
-
-    for event in sortedEvents {
-        let date = dateFormatter.string(from: event.startDate)
-        let start = timeFormatter.string(from: event.startDate)
-        let end = timeFormatter.string(from: event.endDate)
-        let typeStr = formatWorkType(event.type)
-
-        var duration = event.endDate.timeIntervalSince(event.startDate) / 3600
-        if removeLunchBreak && (event.type == .office || event.type == .homeOffice) && duration > 6 {
-            duration -= 0.5
-        }
-
-        if event.isWork {
-            totalHours += duration
-        }
-
-        let hoursStr = String(format: "%6.2f", duration)
-
-        print("│ \(date) │ \(start) │ \(end) │ \(typeStr.padding(toLength: 14, withPad: " ", startingAt: 0)) │ \(hoursStr)h │")
+    // Group events by date
+    var eventsByDate: [Date: [WorkEvent]] = [:]
+    for event in workEvents {
+        let dateKey = event.startDate.cropTime()
+        eventsByDate[dateKey, default: []].append(event)
     }
 
-    print("├────────────┴───────┴───────┴────────────────┼─────────┤")
-    print("│ Total Work Hours                            │ \(String(format: "%6.2f", totalHours))h │")
-    print("└─────────────────────────────────────────────┴─────────┘")
+    // Print table header
+    print("┌────────────┬─────┬───────┬───────┬────────────────┬─────────┐")
+    print("│ Date       │ Day │ Start │ End   │ Type           │ Hours   │")
+    print("├────────────┼─────┼───────┼───────┼────────────────┼─────────┤")
+
+    var totalHours: Double = 0
+    var currentDate = startDate
+    let calendar = Calendar.gmt
+
+    while currentDate < endDate {
+        let dateStr = dateFormatter.string(from: currentDate)
+        let weekdayStr = weekdayFormatter.string(from: currentDate)
+        let isWeekend = CalUtil.isWeekend(date: currentDate)
+        let dateKey = currentDate.cropTime()
+
+        if let events = eventsByDate[dateKey] {
+            for event in events.sorted(by: { $0.startDate < $1.startDate }) {
+                let start = timeFormatter.string(from: event.startDate)
+                let end = timeFormatter.string(from: event.endDate)
+                let typeStr = formatWorkType(event.type)
+
+                var duration = event.endDate.timeIntervalSince(event.startDate) / 3600
+                if removeLunchBreak && (event.type == .office || event.type == .homeOffice) && duration > 6 {
+                    duration -= 0.5
+                }
+
+                if event.isWork {
+                    totalHours += duration
+                }
+
+                let hoursStr = String(format: "%6.2f", duration)
+                print("│ \(dateStr) │ \(weekdayStr) │ \(start) │ \(end) │ \(typeStr.padding(toLength: 14, withPad: " ", startingAt: 0)) │ \(hoursStr)h │")
+            }
+        } else {
+            // No events for this day
+            let typeStr = isWeekend ? "(weekend)" : "(no entry)"
+            print("│ \(dateStr) │ \(weekdayStr) │   -   │   -   │ \(typeStr.padding(toLength: 14, withPad: " ", startingAt: 0)) │      -  │")
+        }
+
+        currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+    }
+
+    print("├────────────┴─────┴───────┴───────┴────────────────┼─────────┤")
+    print("│ Total Work Hours                                  │ \(String(format: "%6.2f", totalHours))h │")
+    print("└────────────────────────────────────────────────────┴─────────┘")
     print("")
 }
 
