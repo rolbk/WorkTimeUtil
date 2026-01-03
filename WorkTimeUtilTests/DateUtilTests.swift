@@ -9,9 +9,13 @@ final class DateUtilTests: XCTestCase {
         let (start, end) = CalUtil.startAndEndDatesForCurrentWeek()
         let calendar = Calendar.gmt
 
-        // End should be 6 days after start
+        // Start should be a Monday (weekday 2)
+        let startWeekday = calendar.component(.weekday, from: start)
+        XCTAssertEqual(startWeekday, 2, "Week should start on Monday")
+
+        // End should be 6 days after start (Sunday)
         let daysBetween = calendar.dateComponents([.day], from: start, to: end).day
-        XCTAssertEqual(daysBetween, 6, "Week should span 6 days")
+        XCTAssertEqual(daysBetween, 6, "Week should span 6 days from Monday to Sunday")
 
         // Both dates should be in the same week
         let startWeek = calendar.component(.weekOfYear, from: start)
@@ -22,6 +26,10 @@ final class DateUtilTests: XCTestCase {
     func testStartAndEndDatesForSpecificWeek() {
         let (start, _) = CalUtil.startAndEndDatesForWeek(week: 1, year: 2025)
         let calendar = Calendar.gmt
+
+        // Start should be a Monday (weekday 2)
+        let startWeekday = calendar.component(.weekday, from: start)
+        XCTAssertEqual(startWeekday, 2, "Week should start on Monday")
 
         let weekOfYear = calendar.component(.weekOfYear, from: start)
         XCTAssertEqual(weekOfYear, 1, "Should be week 1")

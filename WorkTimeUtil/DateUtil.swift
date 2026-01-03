@@ -87,6 +87,7 @@ extension Calendar {
     static var gmt: Calendar {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = .gmt
+        cal.firstWeekday = 2  // Monday
         return cal
     }
 }
