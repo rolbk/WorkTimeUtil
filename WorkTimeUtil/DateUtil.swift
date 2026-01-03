@@ -12,20 +12,26 @@ class CalUtil {
     static func startAndEndDatesForWeek(week: Int, year: Int?) -> (startDate: Date, endDate: Date) {
         let calendar = Calendar.gmt
         let now = Date()
-        var currentYear = calendar.component(.year, from: now)
+        var targetYear = calendar.component(.yearForWeekOfYear, from: now)
 
         if let year = year {
             if year < 100 {
-                currentYear = currentYear - (currentYear % 100) + year
+                targetYear = targetYear - (targetYear % 100) + year
             } else {
-                currentYear = year
+                targetYear = year
+            }
+        } else {
+            // No year specified: if the week is in the future, use previous year
+            let currentWeek = calendar.component(.weekOfYear, from: now)
+            if week > currentWeek {
+                targetYear -= 1
             }
         }
 
         let weekRange = calendar.range(of: .weekOfYear, in: .year, for: now)!
         let maxWeek = weekRange.upperBound - 1
         let adjustedWeek = week > maxWeek ? maxWeek : week
-        let startOfWeek = calendar.date(from: DateComponents(weekOfYear: adjustedWeek, yearForWeekOfYear: currentYear))!
+        let startOfWeek = calendar.date(from: DateComponents(weekOfYear: adjustedWeek, yearForWeekOfYear: targetYear))!
         let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek)!
         return (startOfWeek, endOfWeek)
     }
@@ -42,19 +48,25 @@ class CalUtil {
         let calendar = Calendar.gmt
         let now = Date()
 
-        var currentYear = calendar.component(.year, from: now)
+        var targetYear = calendar.component(.year, from: now)
 
         if let year = year {
             if year < 100 {
-                currentYear = currentYear - (currentYear % 100) + year
+                targetYear = targetYear - (targetYear % 100) + year
             } else {
-                currentYear = year
+                targetYear = year
+            }
+        } else {
+            // No year specified: if the month is in the future, use previous year
+            let currentMonth = calendar.component(.month, from: now)
+            if month > currentMonth {
+                targetYear -= 1
             }
         }
 
         let maxMonth = calendar.monthSymbols.count
         let adjustedMonth = month > maxMonth ? maxMonth : month
-        let startOfMonth = calendar.date(from: DateComponents(year: currentYear, month: adjustedMonth))!
+        let startOfMonth = calendar.date(from: DateComponents(year: targetYear, month: adjustedMonth))!
         let endOfMonth = calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
         return (startOfMonth, endOfMonth)
     }
