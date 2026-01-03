@@ -1,7 +1,7 @@
 import Foundation
 
 enum WorkTimeUtilCommand {
-    case calculate(parameters: [String])
+    case calculate(parameters: [String], verbose: Bool)
     case push(parameters: [String])
     case config(key: String?, value: String?)
 }
@@ -10,7 +10,10 @@ private func parseCommand(_ args: [String]) -> WorkTimeUtilCommand? {
     let binaryName = URL(fileURLWithPath: args.first ?? "").lastPathComponent
 
     if binaryName == "wtc" {
-        return .calculate(parameters: Array(args.dropFirst()))
+        let allParams = Array(args.dropFirst())
+        let verbose = allParams.contains("-v")
+        let parameters = allParams.filter { $0 != "-v" }
+        return .calculate(parameters: parameters, verbose: verbose)
     } else if binaryName == "wtp" {
         return .push(parameters: Array(args.dropFirst()))
     }
@@ -23,8 +26,10 @@ private func parseCommand(_ args: [String]) -> WorkTimeUtilCommand? {
 
     switch subcommand {
     case "calculate":
-        let parameters = Array(args.dropFirst(2))
-        return .calculate(parameters: parameters)
+        let allParams = Array(args.dropFirst(2))
+        let verbose = allParams.contains("-v")
+        let parameters = allParams.filter { $0 != "-v" }
+        return .calculate(parameters: parameters, verbose: verbose)
     case "push":
         let parameters = Array(args.dropFirst(2))
         return .push(parameters: parameters)
@@ -72,7 +77,7 @@ func main() async {
         print(
             """
             Invalid command. Usage:
-            worktimeutil calculate [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
+            worktimeutil calculate [-v] [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
             worktimeutil push [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
             worktimeutil config [key] [value]
             """)
@@ -80,8 +85,8 @@ func main() async {
     }
 
     switch command {
-    case let .calculate(parameters):
-        calculateWorkHours(parameters, calendar: calendarManager)
+    case let .calculate(parameters, verbose):
+        calculateWorkHours(parameters, calendar: calendarManager, verbose: verbose)
     case let .push(parameters):
         guard let absenceAPI else {
             print("No API creds set. Set via: worktimeutil config absenceIOCreds <ID>:<KEY>")
