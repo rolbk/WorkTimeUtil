@@ -3,6 +3,7 @@ import Foundation
 enum WorkTimeUtilCommand {
     case calculate(parameters: [String], verbose: Bool)
     case push(parameters: [String])
+    case export(parameters: [String])
     case config(key: String?, value: String?)
 }
 
@@ -33,6 +34,9 @@ private func parseCommand(_ args: [String]) -> WorkTimeUtilCommand? {
     case "push":
         let parameters = Array(args.dropFirst(2))
         return .push(parameters: parameters)
+    case "export":
+        let parameters = Array(args.dropFirst(2))
+        return .export(parameters: parameters)
     case "config":
         let key = args.count > 2 ? args[2] : nil
         let value = args.count > 3 ? args[3] : nil
@@ -79,6 +83,7 @@ func main() async {
             Invalid command. Usage:
             worktimeutil calculate [-v] [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
             worktimeutil push [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
+            worktimeutil export [W|W<n>[/<yy>]|M|M<n>[/<yy>]]
             worktimeutil config [key] [value]
             """)
         exit(1)
@@ -93,6 +98,8 @@ func main() async {
             exit(1)
         }
         await pushToAbsence(parameters, calendar: calendarManager, absenceAPI: absenceAPI)
+    case let .export(parameters):
+        exportCSV(parameters, calendar: calendarManager)
     case let .config(key, value):
         config(key: key, value: value)
     }
