@@ -7,7 +7,7 @@ WorkTimeUtil is a small command-line tool to read working hours from your calend
 You can install `WorkTimeUtil` using [Homebrew](https://brew.sh/) by running:
 
 ```sh
-brew tap emanuelmairoll/homebrew-tap
+brew tap rolbk/homebrew-tap
 brew install worktimeutil
 ```
 
