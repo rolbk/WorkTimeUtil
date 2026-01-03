@@ -5,7 +5,7 @@ class CalUtil {
         let cal = Calendar.gmt
         let now = Date()
         let startOfWeek = cal.date(from: cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
-        let endOfWeek = cal.date(byAdding: .day, value: 6, to: startOfWeek)!
+        let endOfWeek = cal.date(byAdding: .day, value: 7, to: startOfWeek)!
         return (startOfWeek, endOfWeek)
     }
 
@@ -32,7 +32,7 @@ class CalUtil {
         let maxWeek = weekRange.upperBound - 1
         let adjustedWeek = week > maxWeek ? maxWeek : week
         let startOfWeek = calendar.date(from: DateComponents(weekOfYear: adjustedWeek, yearForWeekOfYear: targetYear))!
-        let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek)!
+        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
         return (startOfWeek, endOfWeek)
     }
 
